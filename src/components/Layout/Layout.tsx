@@ -1,7 +1,5 @@
-import React, {FC, Fragment} from 'react';
+import React, {FC} from 'react';
 
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Header from "./Header/Header";
 
 interface LayoutProps{

@@ -1,8 +1,13 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Disclosure, Menu, Transition} from "@headlessui/react";
-import {Bars3Icon, BellIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {useGetCurrencyQuery} from "../../../services/CurrencyService";
+import {getValidCurrency} from "../../../utils/getValidCurrency";
+
+
 
 const Header = () => {
+    const { data, isError, isLoading } = useGetCurrencyQuery("USD");
+
     return (
         <Disclosure as="nav" className="bg-white shadow-sm">
             {({ open }) => (
@@ -22,29 +27,34 @@ const Header = () => {
                                         alt="Workflow"
                                     />
                                 </div>
-                                <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                                    {/*{navigation.map((item) => (*/}
-                                    {/*    <a*/}
-                                    {/*        key={item.name}*/}
-                                    {/*        href={item.href}*/}
-                                    {/*        className={classNames(*/}
-                                    {/*            item.current*/}
-                                    {/*                ? 'border-indigo-500 text-gray-900'*/}
-                                    {/*                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',*/}
-                                    {/*            'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium'*/}
-                                    {/*        )}*/}
-                                    {/*        aria-current={item.current ? 'page' : undefined}*/}
-                                    {/*    >*/}
-                                    {/*        {item.name}*/}
-                                    {/*    </a>*/}
-                                    {/*))}*/}
-                                </div>
+                            </div>
+                            <div className="ml-6 flex items-center">
+                                {isLoading &&
+                                    <>
+                                        Loading...
+                                    </>
+                                }
+                                {isError &&
+                                    <>
+                                        Loading data error
+                                    </>
+                                }
+                                {data &&
+                                    <div className="mt-1 text-sm text-gray-600 sm:flex sm:items-center">
+                                        <div>USD: {getValidCurrency(data.rates.USD)}</div>
+                                        <span className="hidden sm:mx-2 sm:inline" aria-hidden="true">
+                                        &middot;
+                                    </span>
+                                        <div>EUR: {getValidCurrency(data.rates.EUR)}</div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </>
             )}
         </Disclosure>
+
     );
 };
 

@@ -1,35 +1,20 @@
 import React from 'react';
 
 import Layout from "../Layout/Layout";
-import {useGetCurrencyQuery} from "../../services/CurrencyService";
+import Converter from "../Converter/Converter";
+import ConverterContainer from "../Converter/ConverterContainer";
 
 
 
 
 const App = () => {
 
-    const { data, isError, isLoading } = useGetCurrencyQuery("USD")
-    console.log(data)
+
     return (
     <>
         <Layout pageName={'Converter'} >
 
-            {isLoading &&
-                <>
-                    Loading...
-                </>
-            }
-            {isError &&
-                <>
-                    Loading data error
-                </>
-            }
-
-            {data &&
-                <>
-                    data
-                </>
-            }
+            <ConverterContainer />
 
         </Layout>
     </>
